@@ -1,0 +1,18 @@
+h2, h3 {
+  color: #2c3e50;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+h3:first-of-type {
+  margin-top: 0;
+}

@@ -1,0 +1,63 @@
+<div class="container">
+  <h2>Records List</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <p>Loading records...</p>
+  </div>
+
+  <div class="flex gap-2 mb-3" *ngIf="!loading && records.length > 0">
+    <button class="btn btn-success" (click)="exportToExcel()">
+      📊 Export to Excel
+    </button>
+    <button class="btn btn-danger" (click)="exportToPDF()">
+      📄 Export to PDF
+    </button>
+  </div>
+
+  <table *ngIf="!loading && records.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer ID</th>
+        <th>Customer Last Name</th>
+        <th>Format</th>
+        <th>Genre</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of records">
+        <td>{{ record.id }}</td>
+        <td>{{ record.customerId | customerIdFormat }}</td>
+        <td>{{ record.customerLastName || 'N/A' }}</td>
+        <td>{{ record.format }}</td>
+        <td>{{ record.genre }}</td>
+        <td>
+          <div class="flex gap-1">
+            <button class="btn btn-primary" (click)="viewRecord(record.id)">View</button>
+            <button 
+              class="btn btn-warning" 
+              (click)="editRecord(record.id)"
+              [disabled]="!authService.canUpdate()">
+              Update
+            </button>
+            <button 
+              class="btn btn-danger" 
+              (click)="deleteRecord(record.id)"
+              [disabled]="!authService.canDelete()">
+              Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && records.length === 0" class="alert alert-info">
+    No records found.
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="container">
+  <h2>{{ isEditMode ? 'Edit Record' : 'Add New Record' }}</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div class="card">
+    <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+      <h3>Record Information</h3>
+      
+      <div class="form-group">
+        <label for="title">Title *</label>
+        <input type="text" id="title" formControlName="title" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('title')?.invalid && recordForm.get('title')?.touched">
+          Title is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="artist">Artist *</label>
+        <input type="text" id="artist" formControlName="artist" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('artist')?.invalid && recordForm.get('artist')?.touched">
+          Artist is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="format">Format *</label>
+        <select id="format" formControlName="format" [disabled]="loading">
+          <option value="">Select Format</option>
+          <option *ngFor="let format of formats" [value]="format">{{ format }}</option>
+        </select>
+        <div class="error" *ngIf="recordForm.get('format')?.invalid && recordForm.get('format')?.touched">
+          Format is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="genre">Genre *</label>
+        <select id="genre" formControlName="genre" [disabled]="loading">
+          <option value="">Select Genre</option>
+          <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+        </select>
+        <div class="error" *ngIf="recordForm.get('genre')?.invalid && recordForm.get('genre')?.touched">
+          Genre is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="releaseYear">Release Year *</label>
+        <input type="number" id="releaseYear" formControlName="releaseYear" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('releaseYear')?.invalid && recordForm.get('releaseYear')?.touched">
+          Valid release year is required (1900-2100).
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price *</label>
+        <input type="number" step="0.01" id="price" formControlName="price" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('price')?.invalid && recordForm.get('price')?.touched">
+          Valid price is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="stockQty">Stock Quantity *</label>
+        <input type="number" id="stockQty" formControlName="stockQty" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('stockQty')?.invalid && recordForm.get('stockQty')?.touched">
+          Valid stock quantity is required.
+        </div>
+      </div>
+
+      <h3>Customer Information</h3>
+
+      <div class="form-group">
+        <label for="customerId">Customer ID</label>
+        <input type="text" id="customerId" formControlName="customerId" 
+               placeholder="e.g., 12345A" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('customerId')?.invalid && recordForm.get('customerId')?.touched">
+          Customer ID must be numeric with an alphabetical character at the end (e.g., 12345A).
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="customerFirstName">First Name</label>
+        <input type="text" id="customerFirstName" formControlName="customerFirstName" [disabled]="loading">
+      </div>
+
+      <div class="form-group">
+        <label for="customerLastName">Last Name</label>
+        <input type="text" id="customerLastName" formControlName="customerLastName" [disabled]="loading">
+      </div>
+
+      <div class="form-group">
+        <label for="customerContact">Contact Number</label>
+        <input type="tel" id="customerContact" formControlName="customerContact" 
+               placeholder="e.g., 12345678" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('customerContact')?.invalid && recordForm.get('customerContact')?.touched">
+          Contact number must be numeric, non-negative and at least 8 digits long.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="customerEmail">Email</label>
+        <input type="email" id="customerEmail" formControlName="customerEmail" [disabled]="loading">
+        <div class="error" *ngIf="recordForm.get('customerEmail')?.invalid && recordForm.get('customerEmail')?.touched">
+          Valid email format required.
+        </div>
+      </div>
+
+      <div class="flex gap-2 mt-3">
+        <button type="submit" class="btn btn-success" [disabled]="loading || recordForm.invalid">
+          {{ loading ? 'Saving...' : (isEditMode ? 'Update Record' : 'Add Record') }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="loading">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

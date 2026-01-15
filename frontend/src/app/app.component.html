@@ -1,0 +1,21 @@
+<nav>
+  <div class="container">
+    <ul>
+      <li><a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Login</a></li>
+      <li *ngIf="authService.isLoggedIn()">
+        <a routerLink="/records" routerLinkActive="active">Records</a>
+      </li>
+      <li *ngIf="authService.canAdd()">
+        <a routerLink="/records-add" routerLinkActive="active">Add Record</a>
+      </li>
+      <li style="margin-left: auto;" *ngIf="currentUser">
+        <span style="color: #ecf0f1; margin-right: 1rem;">
+          {{ currentUser.name }} ({{ getRoleDisplay() }}) - {{ getPermissionsDisplay() }}
+        </span>
+        <button class="btn btn-secondary" (click)="logout()">Logout</button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

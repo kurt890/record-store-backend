@@ -1,0 +1,97 @@
+<div class="container">
+  <h2>Record Details</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <p>Loading record...</p>
+  </div>
+
+  <div *ngIf="!loading && record" class="card">
+    <h3>{{ record.title | lowercase }}</h3>
+    
+    <div class="details-grid">
+      <div class="detail-row">
+        <strong>ID:</strong>
+        <span>{{ record.id }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Artist:</strong>
+        <span>{{ record.artist }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Format:</strong>
+        <span>{{ record.format }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Genre:</strong>
+        <span>{{ record.genre }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Release Year:</strong>
+        <span>{{ record.releaseYear }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Price:</strong>
+        <span>{{ record.price | currency }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Stock Quantity:</strong>
+        <span>{{ record.stockQty }}</span>
+      </div>
+      
+      <hr>
+      
+      <h4>Customer Information</h4>
+      
+      <div class="detail-row">
+        <strong>Customer ID:</strong>
+        <span>{{ record.customerId | customerIdFormat }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>First Name:</strong>
+        <span>{{ record.customerFirstName || 'N/A' }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Last Name:</strong>
+        <span>{{ record.customerLastName || 'N/A' }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Contact Number:</strong>
+        <span>{{ record.customerContact || 'N/A' }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <strong>Email:</strong>
+        <span>{{ record.customerEmail || 'N/A' }}</span>
+      </div>
+    </div>
+
+    <div class="flex gap-2 mt-3">
+      <button class="btn btn-secondary" (click)="goBack()">Back to List</button>
+      <button 
+        class="btn btn-warning" 
+        (click)="editRecord()"
+        [disabled]="!authService.canUpdate()">
+        Update
+      </button>
+      <button 
+        class="btn btn-danger" 
+        (click)="deleteRecord()"
+        [disabled]="!authService.canDelete()">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
